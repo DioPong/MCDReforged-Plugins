@@ -86,37 +86,6 @@ def load_command(server, info, commands):
                 server.execute(f"give {info.player} {head}")
             else:
                 server.reply(info, "§d［权限不足］§r")
-
-    # plugin manager
-    elif command in ["plg", "plugin"]:
-        if len(commands) == 3:
-            operation = commands[1]
-            if operation in ["remove", "removeconfirm", "restore"]:
-                if server.get_permission_level(info) == 4:
-                    plugin_name = commands[2]
-                    plugin_full_name = path.join(getcwd(), f"plugins/{plugin_name}")
-
-                    server.reply(info, f"§7[*]You are trying to remove plg{plugin_name}")
-
-                    if operation == "remove":
-                        try:
-                            rename(plugin_full_name, plugin_full_name + '.bak')
-                            server.say(f"§a[+] Plugin {plugin_name} remove succeed§r")
-                        except FileNotFoundError:
-                            server.say(f"§c[+] Plugin {plugin_name} remove failed§r")
-                    elif operation == "removeconfirm":
-                        try:
-                            remove(plugin_full_name) if path.exists(plugin_full_name) else remove(
-                                plugin_full_name + '.bak')
-                            server.say(f"§a[+] Plugin {plugin_name} delete succeed§r")
-                        except FileNotFoundError:
-                            server.say(f"§c[+] Plugin {plugin_name} delete failed§r")
-                    elif operation == "restore":
-                        try:
-                            rename(plugin_full_name + '.bak', plugin_full_name)
-                            server.say(f"§a[+] Plugin {plugin_name} restore succeed§r")
-                        except FileNotFoundError:
-                            server.say(f"§c[+] Plugin {plugin_name} restore failed§r")
     else:
         server.reply(info, '§d【命令错误】§r')
 
@@ -134,4 +103,4 @@ def on_info(server, info):
         return False
 
 def on_load(server, old):
-    server.add_help_message("sc", "简易指令")
+    server.add_help_message("sr", "简易指令")

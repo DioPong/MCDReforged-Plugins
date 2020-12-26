@@ -4,6 +4,8 @@ import os
 
 PLUGIN_PREFFIX = '!!plugin'
 PLUGIN_CONF = 'config/plugins.json'
+ENABLE_PERMISSION = None # None, 4:owner, 3:admin: 2:user, 1:guest
+
 
 HELP_MESSAGE = '''
 §6--------------------------§r
@@ -17,25 +19,20 @@ HELP_MESSAGE = '''
 §6--------------------------§r
 '''.strip()
 
-BLOCK_LIST = ['PluginManager.py']
-
 
 def loadding(server, info, commands):
     operation = commands[0]
     if operation == 'addconf':
         if len(commands) == 3:
             plugin = commands[1]
-            if not plugin in BLOCK_LIST:
-                url = commands[2]
-                try: 
-                    data = json.load(open(PLUGIN_CONF))
-                    data.update({plugin: url})
-                    open(PLUGIN_CONF, 'w', encoding='utf8').write(json.dumps(data))
-                    server.reply(info, f"§2[+] Add plugin {plugin} to config succeed§r")
-                except IOError or FileNotFoundError:
-                    server.reply(info, "§4[-] Faild to load config§r")
-            else:
-                server.reply(info, f"§4[-] Plugin {plugin} is in the BLOCK_LIST§r")
+            url = commands[2]
+            try: 
+                data = json.load(open(PLUGIN_CONF))
+                data.update({plugin: url})
+                open(PLUGIN_CONF, 'w', encoding='utf8').write(json.dumps(data))
+                server.reply(info, f"§2[+] Add plugin {plugin} to config succeed§r")
+            except IOError or FileNotFoundError:
+                server.reply(info, "§4[-] Faild to load config§r")
     elif operation == 'download':
         plugin = commands[1]
         data = json.load(open(PLUGIN_CONF))
@@ -56,15 +53,12 @@ def loadding(server, info, commands):
             server.reply(info, "§7[ ..... ]§r")
     elif operation == "removefile":
         plugin = commands[1]
-        if not plugin in BLOCK_LIST:
-            try:
-                os.remove(f"plugins/{plugin}")
-                server.refresh_changed_plugins()
-                server.reply(info, f"§2[+] Remove {plugin} succeed§r")
-            except FileNotFoundError:
-                server.reply(info, "§4[-] No Such Plugin§r")
-        else:
-            server.reply(info, f"§4[-] Plugin {plugin} is in the BLOCK_LIST§r")
+        try:
+            os.remove(f"plugins/{plugin}")
+            server.refresh_changed_plugins()
+            server.reply(info, f"§2[+] Remove {plugin} succeed§r")
+        except FileNotFoundError:
+            server.reply(info, "§4[-] No Such Plugin§r")
     elif operation == "removeconf":
         plugin = commands[1]
         data = json.load(open(PLUGIN_CONF))
@@ -75,18 +69,15 @@ def loadding(server, info, commands):
             server.reply(info, "§4[-] No Such Config§r")
     elif operation == 'rename':
         src, dst = commands[1], commands[2]
-        if not src in BLOCK_LIST:
-            try:
-                if not os.path.exists(dst):
-                    os.rename(f"plugins/{src}", f"plugins/{dst}")
-                    server.refresh_changed_plugins()
-                    server.reply(info, f"§2[+] Rename {src} to {dst} succeed§r")
-                else:
-                    server.reply(info, f"§4[-] Plugin {dst} already existed§r")
-            except FileNotFoundError:
-                server.reply(info, "§4[-] No Such Plugin§r")
-        else:
-            server.reply(info, f"§4[-] Plugin {src} is in the BLOCK_LIST§r")
+        try:
+            if not os.path.exists(dst):
+                os.rename(f"plugins/{src}", f"plugins/{dst}")
+                server.refresh_changed_plugins()
+                server.reply(info, f"§2[+] Rename {src} to {dst} succeed§r")
+            else:
+                server.reply(info, f"§4[-] Plugin {dst} already existed§r")
+        except FileNotFoundError:
+            server.reply(info, "§4[-] No Such Plugin§r")
     else:
         server.reply(info, "§4[-] Command Not Found§r")
 

@@ -5,7 +5,7 @@ A repository for plugins, based on [MCDReforged](https://github.com/Fallen-Breat
 ## Plugin - Home
 
 - Function : `Set home and teleport to your home.`
-- pget URL : https://github.com/DioPong/MCDReforged-Plugins/main/Plugins/home.py
+- pget URL : https://github.com/DioPong/MCDReforged-Plugins/tree/main/Plugins/home.py
 
 | Syntax       | Description                                    |
 | ------------ | ---------------------------------------------- |
@@ -19,7 +19,7 @@ A repository for plugins, based on [MCDReforged](https://github.com/Fallen-Breat
 ## Plugin - Location
 
 - Function : Set your current location to teleport. Supported dimensions: `the end`  `overworld`  `nether`
-- pget URL : https://github.com/DioPong/MCDReforged-Plugins/main/Plugins/location.py
+- pget URL : https://github.com/DioPong/MCDReforged-Plugins/tree/main/Plugins/location.py
 
 | Syntax | Description |
 | -------- | -------- |
@@ -33,7 +33,7 @@ A repository for plugins, based on [MCDReforged](https://github.com/Fallen-Breat
 ## PluginManager
 
 - Function : Manager your plugin from remote host.
-- pget URL : https://github.com/DioPong/MCDReforged-Plugins/main/Plugins/PluginManager.py
+- pget URL : https://github.com/DioPong/MCDReforged-Plugins/tree/main/Plugins/PluginManager.py
 
 | Syntax                                         | Description                    |
 | ---------------------------------------------- | ------------------------------ |

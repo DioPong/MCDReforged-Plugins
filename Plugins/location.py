@@ -1,7 +1,6 @@
 import os
 import json
 
-
 LOC_PREFFIX = 'loc'
 LOC_CONF = 'config/location.json'
 
@@ -15,6 +14,7 @@ HELP_MESSAGE = '''
 §2- 删除所有传送点§r §7OP: rm§r
 §6--------------------------§r
 '''.strip()
+
 
 def print_help_messages(server, info):
     if info.is_player:
@@ -30,13 +30,6 @@ def get_pos(server, info):
         pos_z = round(float(pos_data[2][0:-1]))
         return [dimension, f"{pos_x} {pos_y} {pos_z}"]
 
-
-def get_data(target):
-    data = json.load(open(LOC_CONF))
-    if data.get(target):
-        return data[target]
-    return None
-			
 
 def add_location(server, info, name, pos, alias):
     try:
@@ -77,7 +70,7 @@ def transport(server, info, target):
         server.execute(f"execute in {data[target]['dimension']} run teleport {info.player} {data[target]['position']}")
 
 
-def loadding(server, info, commands):
+def run(server, info, commands):
     operation = commands[0]
     if operation == 'add':
         if server.get_permission_level(info) >= 3:
@@ -105,11 +98,7 @@ def on_info(server, info):
 
     elif pre_command.startswith(LOC_PREFFIX) and info.is_player:
         commands = pre_command.replace(LOC_PREFFIX, '').split()
-        loadding(server, info, commands)
-
-
-# def on_load(server, old_module):
-#     pass
+        run(server, info, commands)
 
 
 def on_load(server, old):

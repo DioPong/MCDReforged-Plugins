@@ -1,8 +1,5 @@
 import json
 import os
-from types import prepare_class
-from typing import IO
-from plugins.loc import HELP_MESSAGE
 
 HOME_PREFFIX = 'home'
 HOME_CONF = 'config/home.json'
@@ -15,6 +12,7 @@ HELP_MESSAGE = '''
 §7sethome§r §2- 设置家§r 
 §6--------------------------§r
 '''.strip()
+
 
 def print_help_messages(server, info):
     if info.is_player:
@@ -31,7 +29,6 @@ def loading(server, info, command):
         try:
             
             data = json.load(open(HOME_CONF))
-            server.say(">>>>>>>>>>>>>>>>>>>>>")
             name = info.player
             flag = False
             if data.get(name):
@@ -51,6 +48,7 @@ def loading(server, info, command):
     elif command == "help":
         print_help_messages(server, info)
 
+
 def tp(server, info):
     data = json.load(open(HOME_CONF))[info.player]
     server.execute(f"execute in {data['dimension']} run teleport {info.player} {data['position']}")
@@ -68,4 +66,4 @@ def on_load(server, old):
     if not os.path.exists(HOME_CONF):
         with open(HOME_CONF, 'w') as f:
             f.write("{}")
-    server.add_help_message("home", "My House")
+    server.add_help_message(HOME_PREFFIX, "My House")

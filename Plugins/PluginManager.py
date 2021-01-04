@@ -4,7 +4,7 @@ import os
 
 PLUGIN_PREFFIX = '!!plugin'
 PLUGIN_CONF = 'config/plugins.json'
-ENABLE_PERMISSION = None # None, 4:owner, 3:admin: 2:user, 1:guest
+# ENABLE_PERMISSION = None  # None, 4:owner, 3:admin: 2:user, 1:guest
 
 
 HELP_MESSAGE = '''
@@ -20,7 +20,7 @@ HELP_MESSAGE = '''
 '''.strip()
 
 
-def loadding(server, info, commands):
+def run(server, info, commands):
     operation = commands[0]
     if operation == 'addconf':
         if len(commands) == 3:
@@ -90,7 +90,7 @@ def on_info(server, info):
     elif pre_command.startswith(PLUGIN_PREFFIX) and info.is_player:
         if server.get_permission_level(info) >= 3:
             commands = pre_command.replace(PLUGIN_PREFFIX, '').split()
-            loadding(server, info, commands)
+            run(server, info, commands)
         else:
             server.reply(info, "§2[=] 权限不足§r")
         
